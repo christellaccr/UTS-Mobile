@@ -10,10 +10,12 @@ const DAFTAR_MAHASISWA = [
 ];
 
 
+
+// warna avatar (pastel) dan warna teks prodi (lebih gelap agar terbaca)
 const WARNA_PRODI = {
-  'Sistem Informasi': '#2563EB',
-  'Teknologi Informasi': '#7C3AED',
-  'Teknik Informatika': '#0D9488',
+  'Sistem Informasi': { bg: '#BBD7FB', teks: '#2F5E9E' },
+  'Teknologi Informasi': { bg: '#DCC9F7', teks: '#6A43A8' },
+  'Teknik Informatika': { bg: '#BDEBDD', teks: '#23725C' },
 };
 
 export default function MahasiswaScreen() {
@@ -28,7 +30,7 @@ export default function MahasiswaScreen() {
       <TextInput
         style={styles.input}
         placeholder="🔍  Cari nama mahasiswa..."
-        placeholderTextColor="#94A3B8"
+        placeholderTextColor="#B3A8CC"
         value={keyword}
         onChangeText={setKeyword}
       />
@@ -42,15 +44,17 @@ export default function MahasiswaScreen() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 32 }}
         renderItem={({ item }) => {
-          const warna = WARNA_PRODI[item.prodi] || '#475569';
+          const warna = WARNA_PRODI[item.prodi] || { bg: '#E5E7EB', teks: '#4B5563' };
           return (
             <View style={styles.item}>
-              <View style={[styles.avatar, { backgroundColor: warna }]}>
-                <Text style={styles.avatarText}>{item.nama.charAt(0)}</Text>
+              <View style={[styles.avatar, { backgroundColor: warna.bg }]}>
+                <Text style={[styles.avatarText, { color: warna.teks }]}>
+                  {item.nama.charAt(0)}
+                </Text>
               </View>
               <View style={styles.info}>
                 <Text style={styles.nama}>{item.nama}</Text>
-                <Text style={[styles.prodi, { color: warna }]}>{item.prodi}</Text>
+                <Text style={[styles.prodi, { color: warna.teks }]}>{item.prodi}</Text>
               </View>
             </View>
           );
@@ -67,27 +71,25 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
   input: {
     backgroundColor: '#fff',
-    borderRadius: 14,
+    borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 15,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
+    color: '#3F3556',
+    borderWidth: 1,
+    borderColor: '#E7DEF8',
   },
-  count: { color: '#64748B', marginTop: 10, marginBottom: 12, fontSize: 13 },
+  count: { color: '#9A8CB8', marginTop: 10, marginBottom: 12, fontSize: 13 },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 14,
     marginBottom: 10,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
+    shadowColor: '#7C6BA8',
+    shadowOpacity: 0.1,
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 2 },
   },
@@ -99,14 +101,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 14,
   },
-  avatarText: { color: '#fff', fontSize: 18, fontWeight: '800' },
+  avatarText: { fontSize: 18, fontWeight: '800' },
   info: { flex: 1 },
-  nama: { fontSize: 16, fontWeight: '700', color: '#1F2937' },
+  nama: { fontSize: 16, fontWeight: '700', color: '#3F3556' },
   prodi: { marginTop: 2, fontWeight: '600', fontSize: 13 },
   empty: {
     textAlign: 'center',
     marginTop: 32,
-    color: '#94A3B8',
+    color: '#B3A8CC',
     fontSize: 16,
     fontWeight: '600',
   },

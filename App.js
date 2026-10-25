@@ -55,13 +55,17 @@ export default function App() {
       {layar === 'soal1' ? (
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.statsRow}>
-            <View style={[styles.statBox, { backgroundColor: '#16A34A' }]}>
-              <Text style={styles.statAngka}>{jumlahSelesai}</Text>
-              <Text style={styles.statLabel}>Selesai</Text>
+            <View style={[styles.statBox, { backgroundColor: '#BFEBD1' }]}>
+              <Text style={[styles.statAngka, { color: '#1F6B3F' }]}>
+                {jumlahSelesai}
+              </Text>
+              <Text style={[styles.statLabel, { color: '#1F6B3F' }]}>Selesai</Text>
             </View>
-            <View style={[styles.statBox, { backgroundColor: '#F97316' }]}>
-              <Text style={styles.statAngka}>{jumlahProses}</Text>
-              <Text style={styles.statLabel}>Proses</Text>
+            <View style={[styles.statBox, { backgroundColor: '#FFD9BD' }]}>
+              <Text style={[styles.statAngka, { color: '#9A4A12' }]}>
+                {jumlahProses}
+              </Text>
+              <Text style={[styles.statLabel, { color: '#9A4A12' }]}>Proses</Text>
             </View>
           </View>
 
@@ -84,22 +88,22 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F1F5F9' },
+  container: { flex: 1, backgroundColor: '#FBF7FF' },
   hero: {
-    backgroundColor: '#1E3A8A',
+    backgroundColor: '#D9CCFA',
     paddingTop: 56,
     paddingBottom: 28,
     paddingHorizontal: 20,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
   },
-  heroSmall: { color: '#BFDBFE', fontSize: 13, fontWeight: '600' },
-  heroTitle: { color: '#fff', fontSize: 26, fontWeight: '800', marginTop: 4 },
+  heroSmall: { color: '#6B5B95', fontSize: 13, fontWeight: '700' },
+  heroTitle: { color: '#3F3556', fontSize: 26, fontWeight: '800', marginTop: 4 },
   tabs: {
     flexDirection: 'row',
     marginHorizontal: 16,
     marginTop: 16,
-    backgroundColor: '#E2E8F0',
+    backgroundColor: '#EFE7FB',
     borderRadius: 24,
     padding: 4,
   },
@@ -110,16 +114,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabAktif: { backgroundColor: '#fff', elevation: 2 },
-  tabText: { fontWeight: '600', color: '#64748B' },
-  tabTextAktif: { color: '#1E3A8A' },
+  tabText: { fontWeight: '600', color: '#9A8CB8' },
+  tabTextAktif: { color: '#5B4A8A' },
   content: { padding: 16, paddingBottom: 32 },
   statsRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
   statBox: {
     flex: 1,
-    borderRadius: 16,
+    borderRadius: 20,
     paddingVertical: 14,
     alignItems: 'center',
   },
-  statAngka: { color: '#fff', fontSize: 28, fontWeight: '800' },
-  statLabel: { color: '#fff', fontWeight: '600', marginTop: 2 },
+  statAngka: { fontSize: 28, fontWeight: '800' },
+  statLabel: { fontWeight: '700', marginTop: 2 },
 });
