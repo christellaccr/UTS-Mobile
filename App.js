@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import InfoCardScreen from './src/screens/InfoCardScreen';
+import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import InfoCard from './src/components/InfoCard';
 import MahasiswaScreen from './src/screens/MahasiswaScreen';
 
 export default function App() {
@@ -23,7 +23,23 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      {layar === 'soal1' ? <InfoCardScreen /> : <MahasiswaScreen />}
+      {layar === 'soal1' ? (
+        <View style={styles.content}>
+          <Text style={styles.header}>Daftar Tugas</Text>
+          <InfoCard
+            title="Laporan Praktikum Mobile"
+            status="selesai"
+            onPress={() => Alert.alert('Detail', 'Laporan Praktikum Mobile: selesai')}
+          />
+          <InfoCard
+            title="Project UI Aplikasi"
+            status="proses"
+            onPress={() => Alert.alert('Detail', 'Project UI Aplikasi: sedang diproses')}
+          />
+        </View>
+      ) : (
+        <MahasiswaScreen />
+      )}
     </View>
   );
 }
@@ -40,4 +56,6 @@ const styles = StyleSheet.create({
   },
   tabAktif: { backgroundColor: '#93C5FD' },
   tabText: { fontWeight: '600' },
+  content: { flex: 1, padding: 16 },
+  header: { fontSize: 22, fontWeight: 'bold', marginBottom: 16 },
 });
