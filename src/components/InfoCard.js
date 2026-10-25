@@ -3,17 +3,30 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function InfoCard({ title, status, onPress }) {
   const isSelesai = status === 'selesai';
-  const warna = isSelesai ? '#2E9E4F' : '#F28C28'; // hijau / oranye
+  const warna = isSelesai ? '#16A34A' : '#F97316'; // hijau / oranye
+  const warnaSoft = isSelesai ? '#ECFDF3' : '#FFF4E8';
+  const ikon = isSelesai ? '✓' : '●';
 
   return (
-    <View style={styles.card}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: warnaSoft, borderLeftColor: warna },
+      ]}
+    >
       <Text style={styles.title}>{title}</Text>
 
       <View style={[styles.badge, { backgroundColor: warna }]}>
-        <Text style={styles.badgeText}>{status}</Text>
+        <Text style={styles.badgeText}>
+          {ikon} {status}
+        </Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: warna }]}
+        onPress={onPress}
+        activeOpacity={0.8}
+      >
         <Text style={styles.buttonText}>Lihat Detail</Text>
       </TouchableOpacity>
     </View>
@@ -22,30 +35,40 @@ export default function InfoCard({ title, status, onPress }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
+    borderRadius: 16,
+    borderLeftWidth: 6,
     padding: 16,
-    marginBottom: 12,
+    marginBottom: 14,
     elevation: 3,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
   },
-  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+  title: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: 10,
+  },
   badge: {
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginBottom: 12,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginBottom: 14,
   },
-  badgeText: { color: '#fff', fontWeight: '600' },
+  badgeText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
   button: {
-    backgroundColor: '#1E3A8A',
-    paddingVertical: 10,
-    borderRadius: 8,
+    paddingVertical: 11,
+    borderRadius: 12,
     alignItems: 'center',
   },
-  buttonText: { color: '#fff', fontWeight: '600' },
+  buttonText: { color: '#fff', fontWeight: '700', fontSize: 14 },
 });

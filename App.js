@@ -1,42 +1,81 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  StyleSheet,
+} from 'react-native';
 import InfoCard from './src/components/InfoCard';
 import MahasiswaScreen from './src/screens/MahasiswaScreen';
+
+const DAFTAR_TUGAS = [
+  { id: '1', title: 'Laporan Praktikum Mobile', status: 'selesai' },
+  { id: '2', title: 'Project UI Aplikasi', status: 'proses' },
+  { id: '3', title: 'Presentasi Kelompok', status: 'proses' },
+  { id: '4', title: 'Jobsheet 05: FlatList', status: 'selesai' },
+  { id: '5', title: 'Revisi Desain Aplikasi', status: 'proses' },
+];
 
 export default function App() {
   const [layar, setLayar] = useState('soal1');
 
+  const jumlahSelesai = DAFTAR_TUGAS.filter((t) => t.status === 'selesai').length;
+  const jumlahProses = DAFTAR_TUGAS.filter((t) => t.status === 'proses').length;
+
   return (
     <View style={styles.container}>
+      <View style={styles.hero}>
+        <Text style={styles.heroSmall}>Lab. Mobile Computing</Text>
+        <Text style={styles.heroTitle}>
+          {layar === 'soal1' ? 'Daftar Tugas' : 'Direktori Mahasiswa'}
+        </Text>
+      </View>
+
       <View style={styles.tabs}>
         <TouchableOpacity
           style={[styles.tab, layar === 'soal1' && styles.tabAktif]}
           onPress={() => setLayar('soal1')}
         >
-          <Text style={styles.tabText}>Soal 1: InfoCard</Text>
+          <Text style={[styles.tabText, layar === 'soal1' && styles.tabTextAktif]}>
+            Soal 1: InfoCard
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, layar === 'soal2' && styles.tabAktif]}
           onPress={() => setLayar('soal2')}
         >
-          <Text style={styles.tabText}>Soal 2: Mahasiswa</Text>
+          <Text style={[styles.tabText, layar === 'soal2' && styles.tabTextAktif]}>
+            Soal 2: Mahasiswa
+          </Text>
         </TouchableOpacity>
       </View>
 
       {layar === 'soal1' ? (
-        <View style={styles.content}>
-          <Text style={styles.header}>Daftar Tugas</Text>
-          <InfoCard
-            title="Laporan Praktikum Mobile"
-            status="selesai"
-            onPress={() => Alert.alert('Detail', 'Laporan Praktikum Mobile: selesai')}
-          />
-          <InfoCard
-            title="Project UI Aplikasi"
-            status="proses"
-            onPress={() => Alert.alert('Detail', 'Project UI Aplikasi: sedang diproses')}
-          />
-        </View>
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.statsRow}>
+            <View style={[styles.statBox, { backgroundColor: '#16A34A' }]}>
+              <Text style={styles.statAngka}>{jumlahSelesai}</Text>
+              <Text style={styles.statLabel}>Selesai</Text>
+            </View>
+            <View style={[styles.statBox, { backgroundColor: '#F97316' }]}>
+              <Text style={styles.statAngka}>{jumlahProses}</Text>
+              <Text style={styles.statLabel}>Proses</Text>
+            </View>
+          </View>
+
+          {DAFTAR_TUGAS.map((tugas) => (
+            <InfoCard
+              key={tugas.id}
+              title={tugas.title}
+              status={tugas.status}
+              onPress={() =>
+                Alert.alert('Detail Tugas', `${tugas.title}\nStatus: ${tugas.status}`)
+              }
+            />
+          ))}
+        </ScrollView>
       ) : (
         <MahasiswaScreen />
       )}
@@ -45,17 +84,42 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F4F6', paddingTop: 48 },
-  tabs: { flexDirection: 'row', paddingHorizontal: 16, gap: 8 },
+  container: { flex: 1, backgroundColor: '#F1F5F9' },
+  hero: {
+    backgroundColor: '#1E3A8A',
+    paddingTop: 56,
+    paddingBottom: 28,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 28,
+    borderBottomRightRadius: 28,
+  },
+  heroSmall: { color: '#BFDBFE', fontSize: 13, fontWeight: '600' },
+  heroTitle: { color: '#fff', fontSize: 26, fontWeight: '800', marginTop: 4 },
+  tabs: {
+    flexDirection: 'row',
+    marginHorizontal: 16,
+    marginTop: 16,
+    backgroundColor: '#E2E8F0',
+    borderRadius: 24,
+    padding: 4,
+  },
   tab: {
     flex: 1,
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: '#D1D5DB',
+    paddingVertical: 10,
+    borderRadius: 20,
     alignItems: 'center',
   },
-  tabAktif: { backgroundColor: '#93C5FD' },
-  tabText: { fontWeight: '600' },
-  content: { flex: 1, padding: 16 },
-  header: { fontSize: 22, fontWeight: 'bold', marginBottom: 16 },
+  tabAktif: { backgroundColor: '#fff', elevation: 2 },
+  tabText: { fontWeight: '600', color: '#64748B' },
+  tabTextAktif: { color: '#1E3A8A' },
+  content: { padding: 16, paddingBottom: 32 },
+  statsRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
+  statBox: {
+    flex: 1,
+    borderRadius: 16,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  statAngka: { color: '#fff', fontSize: 28, fontWeight: '800' },
+  statLabel: { color: '#fff', fontWeight: '600', marginTop: 2 },
 });
